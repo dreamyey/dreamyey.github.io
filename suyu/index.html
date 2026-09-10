@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>宿豫房屋出租-宿豫区租房房源信息与在线找房平台</title>
+    <meta name="description" content="宿豫房屋出租专业平台，提供宿豫区最新出租房源信息，涵盖住宅、公寓、商铺等类型，支持地图找房、租金查询、个人房东直租，为您提供真实可靠的宿豫租房服务。">
+    <meta name="keywords" content="宿豫房屋出租,宿豫租房,宿豫区租房,宿豫房源,宿豫出租信息,宿豫小区租房,宿豫个人房源">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background-color: #f5f7fa;
+            color: #2c3e50;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* 顶部信息条 */
+        .top-bar {
+            background: #1a3a5c;
+            color: #a8c6df;
+            font-size: 13px;
+            padding: 8px 0;
+        }
+        .top-bar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .top-bar a {
+            color: #d4e6f5;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+        .top-bar a:hover {
+            color: #ffffff;
+        }
+
+        /* 页眉 */
+        .header {
+            background: #ffffff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .logo h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a3a5c;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+        }
+        .logo h1 span {
+            color: #e67e22;
+            font-size: 32px;
+            margin-right: 6px;
+        }
+        .logo p {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-top: -2px;
+        }
+
+        .search-box {
+            flex: 1;
+            max-width: 520px;
+            display: flex;
+            margin: 0 20px;
+        }
+        .search-box input {
+            flex: 1;
+            padding: 12px 18px;
+            border: 2px solid #1a3a5c;
+            border-radius: 30px 0 0 30px;
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .search-box input:focus {
+            border-color: #e67e22;
+        }
+        .search-box button {
+            background: #1a3a5c;
+            color: white;
+            border: none;
+            padding: 0 24px;
+            border-radius: 0 30px 30px 0;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .search-box button:hover {
+            background: #e67e22;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        .btn {
+            padding: 8px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s;
+            display: inline-block;
+        }
+        .btn-outline {
+            border: 1.5px solid #1a3a5c;
+            color: #1a3a5c;
+            background: transparent;
+        }
+        .btn-outline:hover {
+            background: #1a3a5c;
+            color: white;
+        }
+        .btn-solid {
+            background: #e67e22;
+            color: white;
+            border: 1.5px solid #e67e22;
+        }
+        .btn-solid:hover {
+            background: #d35400;
+            border-color: #d35400;
+        }
+
+        /* 导航 */
+        .nav-bar {
+            background: #ffffff;
+            border-bottom: 1px solid #e9ecef;
+            padding: 0;
+        }
+        .nav-bar .container {
+            display: flex;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        .nav-bar a {
+            padding: 14px 20px;
+            text-decoration: none;
+            color: #34495e;
+            font-size: 15px;
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+        }
+        .nav-bar a:first-child {
+            color: #e67e22;
+            border-bottom-color: #e67e22;
+            font-weight: 700;
+        }
+        .nav-bar a:hover {
+            color: #e67e22;
+            border-bottom-color: #e67e22;
+        }
+
+        /* 区块标题 */
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a3a5c;
+            margin: 40px 0 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-title::before {
+            content: '';
+            width: 5px;
+            height: 28px;
+            background: #e67e22;
+            border-radius: 3px;
+            display: inline-block;
+        }
+        .section-title .more-link {
+            margin-left: auto;
+            font-size: 14px;
+            font-weight: 400;
+            color: #7f8c8d;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            transition: color 0.2s;
+        }
+        .section-title .more-link:hover {
+            color: #e67e22;
+        }
+
+        /* 房源卡片网格 */
+        .house-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-bottom: 20px;
+        }
+        .house-card {
+            background: white;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            transition: transform 0.25s, box-shadow 0.25s;
+            cursor: pointer;
+            border: 1px solid #f0f0f0;
+        }
+        .house-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+        }
+        .house-card .thumb {
+            height: 180px;
+            background: linear-gradient(135deg, #3498db, #2c3e50);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 46px;
+            font-weight: 300;
+        }
+        .house-card .thumb .tag {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: #e67e22;
+            color: white;
+            font-size: 12px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+        .house-card .thumb .price-tag {
+            position: absolute;
+            bottom: 10px;
+            right: 12px;
+            background: rgba(0,0,0,0.7);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 16px;
+            font-weight: 700;
+            color: #ffd166;
+        }
+        .house-card .info {
+            padding: 16px 16px 18px;
+        }
+        .house-card .info h3 {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .house-card .info .address {
+            font-size: 13px;
+            color: #95a5a6;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .house-card .info .meta {
+            display: flex;
+            gap: 14px;
+            font-size: 13px;
+            color: #7f8c8d;
+            margin-bottom: 12px;
+        }
+        .house-card .info .meta span {
+            background: #f4f6f8;
+            padding: 2px 10px;
+            border-radius: 12px;
+        }
+        .house-card .info .footer-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #f0f0f0;
+            padding-top: 10px;
+        }
+        .landlord {
+            font-size: 13px;
+            color: #34495e;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .landlord .avatar {
+            width: 24px;
+            height: 24px;
+            background: #1a3a5c;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .status {
+            font-size: 12px;
+            color: #27ae60;
+            background: #eafaf1;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        /* 特色区域 */
+        .feature-section {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            margin: 30px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        .feature-item {
+            text-align: center;
+            padding: 20px 15px;
+            border-radius: 12px;
+            transition: background 0.2s;
+        }
+        .feature-item:hover {
+            background: #f8f9fa;
+        }
+        .feature-item .icon {
+            font-size: 40px;
+            margin-bottom: 12px;
+            display: block;
+        }
+        .feature-item h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #1a3a5c;
+        }
+        .feature-item p {
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+
+        /* 区域房源标签 */
+        .area-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 20px 0 10px;
+        }
+        .area-links a {
+            text-decoration: none;
+            background: white;
+            border: 1px solid #e1e8ee;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 14px;
+            color: #2c3e50;
+            transition: all 0.2s;
+        }
+        .area-links a:hover, .area-links a.active {
+            background: #1a3a5c;
+            color: white;
+            border-color: #1a3a5c;
+        }
+
+        /* 找房指南 */
+        .guide-section {
+            background: #1a3a5c;
+            border-radius: 16px;
+            color: white;
+            padding: 36px;
+            margin: 40px 0;
+        }
+        .guide-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-top: 20px;
+        }
+        .guide-item {
+            background: rgba(255,255,255,0.08);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #e67e22;
+        }
+        .guide-item h3 {
+            font-size: 17px;
+            margin-bottom: 8px;
+            color: #f39c12;
+        }
+        .guide-item p {
+            font-size: 14px;
+            color: #d5e8f5;
+            line-height: 1.7;
+        }
+
+        /* 常见问题 */
+        .faq-section {
+            margin: 40px 0;
+        }
+        .faq-list {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+        }
+        .faq-item {
+            border-bottom: 1px solid #f0f0f0;
+            padding: 20px 24px;
+            transition: background 0.2s;
+        }
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+        .faq-item:hover {
+            background: #fafbfc;
+        }
+        .faq-item h3 {
+            font-size: 16px;
+            color: #1a3a5c;
+            margin-bottom: 6px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+        .faq-item h3::before {
+            content: 'Q';
+            background: #e67e22;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .faq-item p {
+            font-size: 14px;
+            color: #5d6d7e;
+            margin-left: 27px;
+        }
+
+        /* 页脚 */
+        .footer {
+            background: #1a3a5c;
+            color: #a8c6df;
+            padding: 40px 0 20px;
+            margin-top: 50px;
+        }
+        .footer .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 30px;
+        }
+        .footer-about {
+            max-width: 300px;
+        }
+        .footer-about h4 {
+            font-size: 20px;
+            color: white;
+            margin-bottom: 10px;
+        }
+        .footer-links {
+            display: flex;
+            gap: 60px;
+        }
+        .footer-links h5 {
+            color: white;
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+        .footer-links a {
+            display: block;
+            color: #a8c6df;
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 8px;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover {
+            color: #e67e22;
+        }
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            border-top: 1px solid #2a4a6a;
+            padding-top: 20px;
+            font-size: 13px;
+        }
+
+        /* 响应式 */
+        @media (max-width: 1024px) {
+            .house-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .feature-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 14px;
+            }
+            .header .container {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+            }
+            .search-box {
+                max-width: 100%;
+                margin: 0;
+                order: 3;
+            }
+            .header-actions {
+                justify-content: flex-end;
+            }
+            .house-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 14px;
+            }
+            .section-title {
+                font-size: 20px;
+            }
+            .guide-grid {
+                grid-template-columns: 1fr;
+            }
+            .feature-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            .footer .container {
+                flex-direction: column;
+                gap: 20px;
+            }
+            .footer-links {
+                gap: 30px;
+                flex-wrap: wrap;
+            }
+        }
+        @media (max-width: 480px) {
+            .house-grid {
+                grid-template-columns: 1fr;
+            }
+            .nav-bar a {
+                padding: 12px 14px;
+                font-size: 14px;
+            }
+            .btn {
+                padding: 6px 14px;
+                font-size: 13px;
+            }
+            .top-bar .container {
+                justify-content: center;
+                gap: 8px;
+            }
+        }
+    </style>
+    <script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+</head>
+<body>
+
+    <!-- 顶部信息条 -->
+    <div class="top-bar">
+        <div class="container">
+            <div>欢迎来到宿豫房屋出租信息平台，免费发布房源，快速找好房</div>
+            <div>
+                <a href="#">登录</a>
+                <a href="#">注册</a>
+                <a href="#">帮助中心</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页眉 -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1><span>🏠</span>宿豫好房</h1>
+                <p>宿豫区专业房屋出租平台 · 真实房源 · 高效直连</p>
+            </div>
+            <div class="search-box">
+                <input type="text" placeholder="搜索小区、商圈、地铁站... 如：金色家园、万达广场">
+                <button type="button">搜索</button>
+            </div>
+            <div class="header-actions">
+                <a href="#" class="btn btn-outline">发布房源</a>
+                <a href="#" class="btn btn-solid">我要找房</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 导航栏 -->
+    <nav class="nav-bar">
+        <div class="container">
+            <a href="#">首页</a>
+            <a href="#">整租</a>
+            <a href="#">合租</a>
+            <a href="#">公寓</a>
+            <a href="#">商铺出租</a>
+            <a href="#">写字楼</a>
+            <a href="#">个人房源</a>
+            <a href="#">最新上架</a>
+            <a href="#">租金查询</a>
+            <a href="#">房产资讯</a>
+        </div>
+    </nav>
+
+    <!-- 主体内容 -->
+    <main class="container">
+
+        <!-- 热门区域标签 -->
+        <div class="area-links">
+            <a href="#" class="active">全部区域</a>
+            <a href="#">宿豫城区</a>
+            <a href="#">万达商圈</a>
+            <a href="#">京东产业园</a>
+            <a href="#">宿豫高新区</a>
+            <a href="#">来龙镇</a>
+            <a href="#">大兴镇</a>
+            <a href="#">顺河街道</a>
+            <a href="#">下相街道</a>
+        </div>
+
+        <!-- 最新房源 -->
+        <div class="section-title">
+            最新宿豫房屋出租房源
+            <a href="#" class="more-link">查看全部房源 →</a>
+        </div>
+        <div class="house-grid">
+            <div class="house-card">
+                <div class="thumb">
+                    🏢
+                    <span class="tag">近万达</span>
+                    <span class="price-tag">¥1500/月</span>
+                </div>
+                <div class="info">
+                    <h3>金色家园 3室2厅 精装修</h3>
+                    <div class="address">📍 宿豫区 · 万达广场东侧200米</div>
+                    <div class="meta">
+                        <span>105㎡</span>
+                        <span>3室2厅1卫</span>
+                        <span>5/18层</span>
+                    </div>
+                    <div class="footer-info">
+                        <span class="landlord"><span class="avatar">王</span> 王先生（个人）</span>
+                        <span class="status">可随时看房</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="house-card">
+                <div class="thumb">
+                    🏠
+                    <span class="tag">品牌公寓</span>
+                    <span class="price-tag">¥1200/月</span>
+                </div>
+                <div class="info">
+                    <h3>宿豫青年公寓 精品单间</h3>
+                    <div class="address">📍 宿豫区 · 江山大道与燕山路交汇处</div>
+                    <div class="meta">
+                        <span>40㎡</span>
+                        <span>1室1卫</span>
+                        <span>12/20层</span>
+                    </div>
+                    <div class="footer-info">
+                        <span class="landlord"><span class="avatar">寓</span> 青年公寓官方</span>
+                        <span class="status">拎包入住</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="house-card">
+                <div class="thumb">
+                    🏡
+                    <span class="tag">地铁沿线</span>
+                    <span class="price-tag">¥1800/月</span>
+                </div>
+                <div class="info">
+                    <h3>豫新街道 中央花园 2室2厅</h3>
+                    <div class="address">📍 宿豫区 · 豫新街道洪泽湖东路</div>
+                    <div class="meta">
+                        <span>90㎡</span>
+                        <span>2室2厅1卫</span>
+                        <span>9/11层</span>
+                    </div>
+                    <div class="footer-info">
+                        <span class="landlord"><span class="avatar">李</span> 李女士（房东）</span>
+                        <span class="status">新上房源</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="house-card">
+                <div class="thumb">
+                    🏘️
+                    <span class="tag">近学校</span>
+                    <span class="price-tag">¥1100/月</span>
+                </div>
+                <div class="info">
+                    <h3>文昌花园 温馨两室 拎包住</h3>
+                    <div class="address">📍 宿豫区 · 文昌路与项王东路交叉口</div>
+                    <div class="meta">
+                        <span>78㎡</span>
+                        <span>2室1厅1卫</span>
+                        <span>3/6层</span>
+                    </div>
+                    <div class="footer-info">
+                        <span class="landlord"><span class="avatar">张</span> 张阿姨（个人）</span>
+                        <span class="status">急租</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 特色服务 -->
+        <div class="feature-section">
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <span class="icon">✅</span>
+                    <h3>真房源认证</h3>
+                    <p>每套房源均经过平台核实，杜绝虚假信息，为您提供真实可靠的出租房源。</p>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">🤝</span>
+                    <h3>房东直租直连</h3>
+                    <p>大量个人房东直租，省去中间环节，直接与房东沟通，租房更高效更省钱。</p>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">🛡️</span>
+                    <h3>租赁全程保障</h3>
+                    <p>专业客服协助处理租赁纠纷，提供合同模板与法律咨询支持，让您租得安心。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 更多推荐房源 -->
+        <div class="section-title">
+            精选优质房源推荐
+            <a href="#" class="more-link">更多推荐 →</a>
+        </div>
+        <div class="house-grid">
+            <div class="house-card">
+                <div class="thumb">
+                    🏢
+                    <span class="tag">首次出租</span>
+                    <span class="price-tag">¥2200/月</span>
+                </div>
+                <div class="info">
+                    <h3>万达华府 全新精装大三居</h3>
+                    <div class="address">📍 宿豫区 · 万达广场南侧</div>
+                    <div class="meta">
+                        <span>125㎡</span>
+                        <span>3室2厅2卫</span>
+                        <span>16/26层</span>
+                    </div>
+                    <div class="footer-info">
+                        <span class="landlord"><span class="avatar">赵</span> 赵先生（个人）</span>
+                        <span class="status">采光好</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="house-card">
+                <div class="thumb">
+                    🏠
+                    <span class="tag">押一付一</span>
+                    <span class="price-tag">¥950/月</span>
+                </div>
+                <div class="info">
+                    <h3>锦绣江南 合租单间（限女生）</h3>
+                    <div class="address">📍 宿豫区 · 项王路锦绣江南小区</div>
+                    <div class="meta">
+                        <span>25㎡</span>
+                        <span>4室1厅合租</span>
+                        <span>7/11层</span>
+                    </div>
+                    <div class="footer-info">
+                        <span class="landlord"><span class="avatar">陈</span> 陈小姐（个人）</span>
+                        <span class="status">拎包入住</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="house-card">
+                <div class="thumb">
+                    🏡
+                    <span class="tag">带车位</span>
+                    <span class="price-tag">¥1600/月</span>
+                </div>
+                <div class="info">
+                    <h3>千秋时代新城 两室一厅</h3>
+                    <div class="address">📍 宿豫区 · 千秋时代新城东门</div>
+                    <div class="meta">
+                        <span>88㎡</span>
+                        <span>2室1厅1卫</span>
+                        <span>2/6层</span>
+                    </div>
+                    <div class="footer-info">
+                        <span class="landlord"><span class="avatar">刘</span> 刘先生（房东）</span>
+                        <span class="status">有钥匙</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="house-card">
+                <div class="thumb">
+                    🏘️
+                    <span class="tag">商住两用</span>
+                    <span class="price-tag">¥2500/月</span>
+                </div>
+                <div class="info">
+                    <h3>电商产业园 精装公寓（可办公）</h3>
+                    <div class="address">📍 宿豫区 · 洪泽湖东路电商产业园</div>
+                    <div class="meta">
+                        <span>58㎡</span>
+                        <span>1室1厅1卫</span>
+                        <span>14/22层</span>
+                    </div>
+                    <div class="footer-info">
+                        <span class="landlord"><span class="avatar">企</span> 产业园运营商</span>
+                        <span class="status">随时入住</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 找房指南 -->
+        <section class="guide-section">
+            <h2 style="font-size:26px; color:white;">宿豫租房指南 · 帮你少走弯路</h2>
+            <div class="guide-grid">
+                <div class="guide-item">
+                    <h3>📌 区域怎么选？</h3>
+                    <p>宿豫区核心商圈（万达广场周边）生活配套成熟，租金相对较高；京东产业园附近上班族集中，通勤方便；高新区房源较新、环境好；顺河街道、下相街道性价比高。建议根据工作地点和预算综合选择。</p>
+                </div>
+                <div class="guide-item">
+                    <h3>💰 租金水平参考</h3>
+                    <p>目前宿豫区普通住宅单间月租金大约在600-1000元，两室一厅整租在1200-1800元左右，三室及以上户型约1500-2500元。品牌公寓和精装房价格略高，老旧小区相对便宜。</p>
+                </div>
+                <div class="guide-item">
+                    <h3>📋 看房注意事项</h3>
+                    <p>看房时注意检查水电燃气是否正常、墙面有无渗水、家电新旧程度及能否正常使用。白天和晚上各看一次最好，确认周边噪音情况。同时核验房东身份证和房产证信息。</p>
+                </div>
+                <div class="guide-item">
+                    <h3>📝 签约防坑要点</h3>
+                    <p>签约前明确押金退还条件、维修责任划分、物业费取暖费由谁承担。所有口头承诺都要写入合同。建议使用正规租赁合同模板，并保留好转账记录和聊天凭证。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 常见问题 FAQ -->
+        <section class="faq-section">
+            <div class="section-title">关于宿豫房屋出租的常见问题</div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <h3>在宿豫区租房，中介费一般是多少？</h3>
+                    <p>在宿豫区通过中介找房，通常收取一个月租金的50%-100%作为中介费。不过本平台大量房源为个人房东直租，可以省去这笔费用。建议优先筛选"个人房源"标签，直接与房东联系。</p>
+                </div>
+                <div class="faq-item">
+                    <h3>宿豫区哪些小区离宿迁高铁站比较近？</h3>
+                    <p>高铁宿迁站位于宿豫区东部，附近有豫新街道的几个小区，比如豫新家园、文昌花园、江山一品等。这些小区到高铁站车程约10-15分钟，公交也比较方便，适合经常出差的人群。</p>
+                </div>
+                <div class="faq-item">
+                    <h3>租房时押金一般交多少？可以谈吗？</h3>
+                    <p>宿豫区租房市场普遍是"押一付三"或"押一付一"。押金金额可以协商，特别是长租（一年以上）或淡季时，房东通常愿意接受更灵活的付款方式。个人房东比二房东更好沟通。</p>
+                </div>
+                <div class="faq-item">
+                    <h3>网上看到的房源信息可靠吗？如何避免被骗？</h3>
+                    <p>建议优先选择平台上带有"已认证"标识的房源，看房前不要缴纳任何费用。凡是要求提前打款、定金留房的都要警惕。本平台对个人房东进行了实名认证，但仍需注意核实房主身份与产权证明。</p>
+                </div>
+                <div class="faq-item">
+                    <h3>宿豫区有没有短租（月租或季租）的房源？</h3>
+                    <p>有的。宿豫区万达商圈附近及电商产业园周边有不少品牌公寓提供灵活租期，最短可租1个月，租金会略高于长租。平台上筛选"短租"标签即可找到相关房源，也可以直接联系公寓管家咨询。</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-about">
+                <h4>🏠 宿豫好房</h4>
+                <p>专注宿豫区房屋出租信息服务，致力于为租客和房东搭建真实、高效、便捷的在线租房桥梁。每日更新房源，人工审核信息，让找房变得更简单。</p>
+            </div>
+            <div class="footer-links">
+                <div>
+                    <h5>房源分类</h5>
+                    <a href="#">整租房源</a>
+                    <a href="#">合租房源</a>
+                    <a href="#">公寓出租</a>
+                    <a href="#">商铺租赁</a>
+                    <a href="#">写字楼出租</a>
+                </div>
+                <div>
+                    <h5>热门区域</h5>
+                    <a href="#">宿豫城区</a>
+                    <a href="#">万达商圈</a>
+                    <a href="#">京东产业园</a>
+                    <a href="#">高新区</a>
+                    <a href="#">来龙镇</a>
+                </div>
+                <div>
+                    <h5>帮助支持</h5>
+                    <a href="#">发布房源指南</a>
+                    <a href="#">租房防骗手册</a>
+                    <a href="#">合同模板下载</a>
+                    <a href="#">联系我们</a>
+                    <a href="#">意见反馈</a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            © 2024 宿豫好房 · 宿豫房屋出租信息平台 | 苏ICP备00000000号
+        </div>
+    </footer>
+
+</body>
+  </html>
